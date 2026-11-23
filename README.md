@@ -1,121 +1,143 @@
 # Smart Prescription & Disease Risk Predictor
-## Personal Healthcare Web Application Frontend
 
-A patient-centric personal digital health assistant built strictly with:
-- **React.js** using Create React App
-- **JavaScript only** (`.js` files only)
-- **No JSX syntax** (Built 100% using `React.createElement()`)
-- **Tailwind CSS v3**
-- **React Router DOM**
-- **Recharts**
-- **Lucide React**
-- **jsPDF** for Consolidated Health Report generation
+An AI-driven healthcare web application designed to help patients organize digital medical records, detect potentially dangerous drug-drug interactions, estimate longitudinal disease risks using machine learning, and provide structured health monitoring roadmaps.
 
 ---
 
-## 🚀 Running the Project
+## 🏗️ Repository Architecture
 
-### Development Server
-```bash
-npm start
+This repository is organized to enable 4 members to collaborate cleanly on their dedicated branches without collisions:
+
 ```
-Runs the app in development mode at `http://localhost:3000`.
-
-### Production Build
-```bash
-npm run build
+Smart_Prescription_Disease_Risk_Predictor/
+│
+├── frontend/                     # React JS + Tailwind CSS Application (Client)
+│   ├── public/
+│   └── src/
+│       ├── components/           # Reusable UI widgets (Sidebar, Navbar, Layout, Cards)
+│       ├── pages/                # App views (Dashboard, Profile, Login, Register)
+│       ├── services/             # API client, AuthContext, & service wrappers
+│       ├── App.jsx               # Main React router and authentication guards
+│       └── index.css             # Tailwind setup, Inter typography, custom theme palette
+│
+├── backend/                      # Node.js + Express REST API Gateway
+│   ├── config/                   # MongoDB connection logic (db.js)
+│   ├── models/                   # Mongoose data schemas (User.js)
+│   ├── controllers/              # Route controller business logic (auth, dashboard)
+│   ├── routes/                   # Express route definitions
+│   ├── middleware/               # JWT authentication middleware
+│   ├── .env.example              # Template for backend environment variables
+│   └── server.js                 # Express server entrypoint
+│
+├── ml-service/                   # Python FastAPI & Scikit-learn Service
+│   ├── dataset/                  # Medical datasets for model training (.gitkeep)
+│   ├── models/                   # Serialized ML model artifacts (.joblib / .pkl)
+│   ├── notebooks/                # Exploratory data analysis notebooks
+│   ├── preprocess.py             # Feature engineering & dataset preprocessing
+│   ├── train.py                  # Model training pipeline
+│   ├── predict.py                # Inference helper
+│   ├── main.py                   # FastAPI prediction service entrypoint
+│   └── requirements.txt          # Python dependencies
+│
+├── docs/                         # Team Project Documentation
+│   ├── api-contracts.md          # Shared REST API specifications across all 4 modules
+│   └── database-schema.md        # MongoDB schema design definitions
+│
+└── README.md
 ```
-Builds the app for production to the `build` folder. Tested and compiled cleanly with zero errors.
 
 ---
 
-## 🧭 Navigation Structure & Routes
+## 👥 Team Work Allocation & Branches
 
-### MY HEALTH
-1. **Dashboard** (`/`):
-   - Welcome greeting: *"Good Morning, [User Name]! Your health journey, organized in one place."*
-   - Prominent section: **Your Health, All in One Place** with 4 primary action cards:
-     1. *Upload Records*
-     2. *Check Medicines*
-     3. *Assess Health Risks*
-     4. *View Health Roadmap*
-   - Summary metric cards: Total Medical Records, Active Medications, Completed Health Assessments, Upcoming Tasks.
-   - Medicine Safety Overview & Disease Risk Overview.
-   - Recent Medical Records & Roadmap preview.
-2. **My Medical Records** (`/records`):
-   - **Method A: Document Upload** (Scanned prescriptions, lab reports, medical documents with file selection & preview).
-   - **Method B: Manual Entry** (Enter prescriptions, lab tests, and history notes directly).
-   - Search, category filter pills, metadata viewer, and authorized deletion.
-3. **Medical Timeline** (`/timeline`):
-   - Chronological unified stream of prescriptions, lab reports, AI risk assessments, and clinical history.
-   - Date and record-type filters.
-4. **My Prescriptions** (`/prescriptions`):
-   - Active and completed medication lists.
-   - Dosage, frequency, duration, start/end dates, prescribing doctor, and directions.
-   - Manual entry and scanned document attachment.
-5. **My Lab Reports** (`/lab-reports`):
-   - Numerical biomarker values (Fasting Glucose, HbA1c, Cholesterol, BP, eGFR) with units and reference ranges.
-   - 6-Month Fasting Blood Glucose trend curve powered by Recharts.
-   - Document upload and manual entry support.
-
-### HEALTH INTELLIGENCE
-6. **Medicine Safety Checker** (`/medicine-safety`):
-   - Searchable medicine library with quick pre-filled demonstration pairs (e.g., Warfarin + Aspirin, Lisinopril + Spironolactone).
-   - Analysis tray with add/remove capability.
-   - Severity badges (High / Moderate / Minor), biological mechanism explanations, and precautions for doctor consultation.
-   - Explicit clinical demonstration disclaimer.
-7. **Disease Risk Assessment** (`/disease-risk`):
-   - Patient clinical factor sliders (Age, BMI, Systolic BP, Fasting Glucose, HbA1c, LDL, Smoking, Family History).
-   - Multi-factor models: *Type 2 Diabetes Progression*, *10-Year ASCVD Heart Risk*, and *Renal Secondary Risk*.
-   - Animated SVG circular probability meter (Low, Moderate, High).
-   - 5-Year progression projection and key contributing biomarker drivers breakdown.
-   - Assessment history log.
-8. **Health Insights** (`/health-insights`):
-   - Multi-biomarker progression line chart (Systolic BP vs Fasting Glucose vs Cholesterol over 6 months).
-   - Personal health insight cards (Blood Pressure stabilization, Glycemic surveillance, Renal function).
-   - Medication adherence summary.
-
-### PREVENTIVE CARE
-9. **Health Roadmap** (`/roadmap`):
-   - Divided into **Next 3 Months**, **Next 6 Months**, and **Next 12 Months**.
-   - Interactive checklist items with progress percentage bar and physician focus notes.
-10. **Suggested Lab Tests** (`/suggested-tests`):
-    - Evidence-based test recommendations (HbA1c panel, Lipid profile, uACR, Serum Electrolytes, ECG).
-    - Clinical rationale, priority, and "Add to Roadmap" / "Mark Completed" actions.
-11. **Reminders** (`/reminders`):
-    - Medication, lab test, and doctor follow-up reminders.
-    - Add, edit, delete, and check-off completion status with LocalStorage persistence.
-
-### ACCOUNT & AUTH
-12. **My Health Profile** (`/profile`):
-    - Personal details, biological sex, dynamic BMI computation, allergies, chronic conditions, and emergency contacts.
-13. **Settings** (`/settings`):
-    - Notification preferences, privacy settings, demo baseline reset, and logout.
-14. **Help & Support** (`/help`):
-    - FAQs, clinical disclaimer, and emergency medical advisory notice.
-15. **Authentication Pages**:
-    - **Login** (`/login`)
-    - **Register** (`/register`)
-    - **Forgot Password** (`/forgot-password`)
-    - **Reset Password** (`/reset-password`)
+| Team Member | Branch Name | Assigned Functional Scope |
+| :--- | :--- | :--- |
+| **Member 1 (You)** | `member-1-auth-dashboard` | Initial repo setup, React frontend, Node backend, JWT authentication, Patient profile, Main dashboard |
+| **Member 2** | `member-2-records` | Prescription & Lab Report upload, OCR extraction, chronological medical history timeline |
+| **Member 3** | `member-3-interactions` | Drug-drug interaction database matching, severity alerts, safety recommendations |
+| **Member 4** | `member-4-ml-roadmap` | Scikit-learn disease risk models, FastAPI inference, lab test recommendation, health monitoring roadmap |
 
 ---
 
-## 📄 Consolidated Health Report (PDF Generation)
-- Located in the top header: **"Download My Health Report"**
-- Built using **jsPDF** (client-side export without requiring server rendering).
-- Compiles:
-  1. Patient Profile Summary (Name, DOB, Age, Sex, Blood Group, BMI, Allergies, Conditions, Emergency Contact)
-  2. Active Prescriptions & Medications
-  3. Laboratory Test Diagnostics Summary
-  4. Medicine Safety & Interaction Check History
-  5. Disease Risk Assessment & Five-Year Progression History
-  6. Preventive Healthcare Roadmap (3, 6, 12 Months)
-  7. Clear section headers, date stamps, and mandatory medical disclaimer banners.
+## 🎨 Design System & Aesthetic Standard
+
+The application uses a clinical, minimal aesthetic avoiding excessive animations and harsh colors:
+
+- **Primary Color**: Forest Green (`#263B36`)
+- **Secondary Color**: Sage (`#A8B8A0`)
+- **Background**: Ivory (`#F3F0E8`)
+- **Card Elements**: Crisp white with rounded corners (`rounded-xl`) and subtle shadows (`shadow-card`)
+- **Typography**: Inter
+- **Navigation**: Always-expanded Dark Forest Green sidebar with active sage indicators
 
 ---
 
-## 🛡️ Architecture & Principles
-- **Strictly Personal Health Assistant**: Does not contain hospital statistics, inpatient/outpatient hospital beds, or doctor billing.
-- **Pure JavaScript & `React.createElement()`**: 100% free of JSX syntax across all 25+ files.
-- **Future Integration Ready**: Includes [`src/services/api.js`](file:///d:/Projects/Personal/Smart_Prescription_Disease_Risk_Predictor/src/services/api.js) as modular service placeholders for future Express.js, MongoDB, and Python FastAPI/ML microservices.
+## 🚀 How to Run the Application Locally
+
+### 1. Backend (Node.js & Express)
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Copy environment configuration:
+   ```bash
+   cp .env.example .env
+   ```
+   *(Ensure MongoDB is running or configure your MongoDB Atlas connection string in `backend/.env`)*
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the backend server:
+   ```bash
+   npm run dev
+   # or
+   npm start
+   ```
+   *The backend will run at `http://localhost:5000` (Health Check: `http://localhost:5000/api/health`)*
+
+### 2. Frontend (React JS & Tailwind CSS)
+1. Open a new terminal and navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the React development server:
+   ```bash
+   npm start
+   ```
+   *The frontend will launch in your browser at `http://localhost:3000`*
+
+### 3. Machine Learning Service (FastAPI & Python)
+1. Navigate to the ml-service directory:
+   ```bash
+   cd ml-service
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   # On Windows:
+   .\venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the FastAPI server:
+   ```bash
+   python main.py
+   # or
+   uvicorn main:app --reload --port 8000
+   ```
+   *The ML service will run at `http://localhost:8000` with interactive docs at `http://localhost:8000/docs`*
+
+---
+
+## 🔐 Security & Git Practices
+- Never commit `.env` files or secrets to GitHub. Both root and subfolder `.gitignore` files are pre-configured.
+- Always communicate through [`docs/api-contracts.md`](docs/api-contracts.md) before altering cross-module payload structures.
