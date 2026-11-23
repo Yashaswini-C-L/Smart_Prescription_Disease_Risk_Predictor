@@ -1,9 +1,0 @@
-{
-  "short_name": "HealthPredictor",
-  "name": "Smart Prescription & Disease Risk Predictor",
-  "icons": [],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#1E60F2",
-  "background_color": "#F5F7FB"
-}
