@@ -27,6 +27,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// App Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/dashboard', require('./routes/dashboardRoutes'));
+
 // 404 handler
 app.use((req, res, next) => {
   res.status(404).json({
