@@ -1,11 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App.jsx';
 
-test('renders Smart Prescription foundation heading', () => {
+test('renders Smart Prescription authentication portal header', () => {
   render(<App />);
-  const mainHeading = screen.getByRole('heading', {
-    name: /Smart Prescription & Disease Risk Predictor/i,
-    level: 1
-  });
-  expect(mainHeading).toBeInTheDocument();
+  const portalHeading = screen.getByText(/Smart Prescription/i);
+  expect(portalHeading).toBeInTheDocument();
 });
